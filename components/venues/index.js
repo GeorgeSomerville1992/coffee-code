@@ -32,6 +32,8 @@ export default class Venues extends Component {
     }, (error) => {
       console.log('error', error)
     })
+
+
     // YelpApi().then((data) => {
     //   console.log('datttttaaa', data)
     // }, (error) => {
