@@ -30,7 +30,6 @@ router.get('/', function(req, res) {
   }
 
   foursquare.venues.search(searchObj, function(error, resp) {
-    console.log('resp',resp, 'error', error)
     response = JSON.stringify(resp);
 
     res.send(response);

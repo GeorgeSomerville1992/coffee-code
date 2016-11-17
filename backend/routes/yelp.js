@@ -27,7 +27,6 @@ router.post('/', function(req, res, next) {
   }).then(function (data) {
     var businesses = data.businesses;
     var location = data.region;
-    console.log('sending back this', businesses);
     res.send({businesses: businesses})
   });
 });
