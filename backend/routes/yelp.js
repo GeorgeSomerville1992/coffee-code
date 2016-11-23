@@ -18,13 +18,13 @@ var client = yelp.createClient({
     maxSockets: 25  // ~> Default is 10
   }
 });
-
+// hsould geocode where you are really..
 router.post('/', function(req, res, next) {
-  console.log('yelp api firing');
   client.search({
-    terms: "Café de la presse",
-    location: "BELGIUM"
+    terms: "Cafe",
+    ll: '37.77493,-122.419415'
   }).then(function (data) {
+    console.log('the business ocming back form yelp api...', data)
     var businesses = data.businesses;
     var location = data.region;
     res.send({businesses: businesses})

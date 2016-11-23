@@ -17,7 +17,6 @@ router.post('/', function(req, res) {
   }
 
   foursquare.venues.search(searchObj, function(error, resp) {
-    console.log('resp',resp, 'error', error)
     res.send(resp);
   })
 })

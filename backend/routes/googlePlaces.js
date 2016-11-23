@@ -25,10 +25,9 @@ router.post('/', function(req, res) {
   };
 
   googlePlaces.placeSearch(parameters, function (error, resp) {
-      if (error) throw error;
-      console.log('THE RESPONSE FROM GOOGLE PLACES', resp);
-      response = JSON.stringify(resp);
-      res.send(response);
+    if (error) throw error;
+    response = JSON.stringify(resp);
+    res.send(response);
   });
 })
 
@@ -40,10 +39,9 @@ router.get('/', function(req, res) {
   };
 
   googlePlaces.placeSearch(parameters, function (error, resp) {
-      if (error) throw error;
-      console.log('THE RESPONSE FROM GOOGLE PLACES', resp, error);
-      response = JSON.stringify(resp);
-      res.send(response);
+    if (error) throw error;
+    response = JSON.stringify(resp);
+    res.send(response);
   });
 })
 
