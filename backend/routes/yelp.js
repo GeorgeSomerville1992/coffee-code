@@ -24,7 +24,6 @@ router.post('/', function(req, res, next) {
     terms: "Cafe",
     ll: '37.77493,-122.419415'
   }).then(function (data) {
-    console.log('the business ocming back form yelp api...', data)
     var businesses = data.businesses;
     var location = data.region;
     res.send({businesses: businesses})
