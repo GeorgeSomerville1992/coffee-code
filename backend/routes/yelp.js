@@ -21,8 +21,8 @@ var client = yelp.createClient({
 // hsould geocode where you are really..
 router.post('/', function(req, res, next) {
   client.search({
-    terms: "Cafe",
-    ll: '37.77493,-122.419415'
+    term: "Coffee",
+    ll: Object.keys(req.body)[0]
   }).then(function (data) {
     var businesses = data.businesses;
     var location = data.region;

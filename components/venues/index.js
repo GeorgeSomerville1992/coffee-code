@@ -28,29 +28,23 @@ export default class Venues extends Component {
     this.state = {
       loaded: false
     }
-    this.getVenus = this.getVenues
+    this.getVenues = this.getVenues.bind(this)
+    this.searchVenues = this.searchVenues.bind(this)
   }
 
   componentWillMount() {
-    console.log('firing componenet will mount')
-    // make an object and data returned from promises.
-    // need to figure out how that will work..
-
-    // move this to seperate function...
-
-
-
     this.setState({
       loaded: true
     });
-
-    // then bang out the
-    // and use search bar
   }
 
   getVenues(location) {
     let locationString = location.lat + ", " + location.lng
-    console.log('getting venues', location)
+
+    // bind all of these to redux...
+    // have a promise dispatcher
+    let mainHash = {}
+
     YelpApi(locationString).then((data) => {
       console.log('datta from yelp', data)
       this.setState({ loaded: true })
@@ -66,21 +60,25 @@ export default class Venues extends Component {
     })
 
 
-    GooglePlacesApi([location.lat, location.lng]).then((data) => {
+    GooglePlacesApi(locationString).then((data) => {
       console.log('data from google places', data)
     }, (error) => {
       console.log('error', error)
     })
   }
+  // external helper libary
+  combineResults() {
 
-  searchVenus(postcode) {
-    console.log('Im searching my venus', postcode);
-    let that = this;
+  }
+
+
+  searchVenues(postcode) {
+    let that = this
+
     Geocoder.getFromLocation(postcode).then(
       json => {
         var location = json.results[0].geometry.location;
         that.getVenues(location)
-        console.log(location.lat + ", " + location.lng);
       },
       error => {
         alert(error);
@@ -92,7 +90,7 @@ export default class Venues extends Component {
     return (
       <View style={styles.container}>
         <Header text="Venues" loaded={this.state.loaded}  />
-        <PostCodeSearch searchVenues={this.searchVenus}/>
+        <PostCodeSearch searchVenues={this.searchVenues} />
         <View style={styles.body}>
           <Text> hello </Text>
         </View>

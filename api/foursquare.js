@@ -5,7 +5,7 @@ module.exports = (location) => {
 
   // annoying thing with fetch...
   // call json then use response after that
-  console.log('FOURSWURE GOING', location)
+
   return fetch(rootUrl, {
     method: 'POST',
     headers: {

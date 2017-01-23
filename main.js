@@ -13,10 +13,10 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
-  Text,
+  StyleSheet,
   View,
-  Navigator,
-  AsyncStorage
+  AsyncStorage,
+  Navigator
 } from 'react-native';
 
 import YelpApi from './api/yelp.js'

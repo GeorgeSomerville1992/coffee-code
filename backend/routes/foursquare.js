@@ -11,9 +11,9 @@ var foursquare = require('node-foursquare-venues')('PJOVUMNXMNMSCGSYVETRKZ23WN2L
 
 
 router.post('/', function(req, res) {
-  console.log('REQUESTION COMEING IN FOURSQUATE', req)
+
   var searchObj = {
-    ll: req.location,
+    ll: Object.keys(req.body)[0],
     query: 'coffee'
   }
 

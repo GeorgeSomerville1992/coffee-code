@@ -19,9 +19,12 @@ router.post('/', function(req, res) {
   /**
    * Place search - https://developers.google.com/places/documentation/#PlaceSearchRequests
    */
+
+  console.log('REQUESTION COMEING IN Google places LOCATION', Object.keys(req.body)[0])
+
   parameters = {
-      location: [-33.8670522, 151.1957362],
-      types: "doctor"
+      location: Object.keys(req.body)[0],
+      keyword: "coffee"
   };
 
   googlePlaces.placeSearch(parameters, function (error, resp) {
@@ -35,7 +38,7 @@ router.post('/', function(req, res) {
 router.get('/', function(req, res) {
   parameters = {
       location: [-33.8670522, 151.1957362],
-      types: "doctor"
+      types: "Coffee"
   };
 
   googlePlaces.placeSearch(parameters, function (error, resp) {
@@ -46,4 +49,3 @@ router.get('/', function(req, res) {
 })
 
 module.exports = router;
-
