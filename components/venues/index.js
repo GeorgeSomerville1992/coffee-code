@@ -43,10 +43,16 @@ export default class Venues extends Component {
 
     // bind all of these to redux...
     // have a promise dispatcher
-    let mainHash = {}
+    let venues = []
+    // push the data inside here...
 
+    // each one will be passed through to a util function
+    // then chucked back we simply ad this to our main hash
+
+    //
     YelpApi(locationString).then((data) => {
       console.log('datta from yelp', data)
+      venues.push(data)
       this.setState({ loaded: true })
     }, (error) => {
       console.log('error', error)
@@ -54,6 +60,7 @@ export default class Venues extends Component {
 
     FourSquareApi(locationString).then((data) => {
       console.log('datat from fourswquare', data)
+      venues.push(data)
       this.setState({ loaded: true })
     }, (error) => {
       console.log('error', error)
@@ -62,9 +69,14 @@ export default class Venues extends Component {
 
     GooglePlacesApi(locationString).then((data) => {
       console.log('data from google places', data)
+      venues.push(data)
     }, (error) => {
       console.log('error', error)
     })
+    console.log('final data', venues)
+    // blank becuase of raise condirion
+    // needs to go into a promise????
+    //  construct some sort of promise ting
   }
   // external helper libary
   combineResults() {

@@ -9,6 +9,8 @@ var rootUrl = 'https://api.foursquare.com/v2/venues/search?'
 
 var foursquare = require('node-foursquare-venues')('PJOVUMNXMNMSCGSYVETRKZ23WN2LUR31M0AD04AMKTJAKI5I', '3GG355R0B5D4KMH1J1UIUFXH2ZZCFH4ISOW5WTNYV11JJTDV', '20160925')
 
+var normalize = require('../utils/normalize-venue-data')
+console.log(normalize);
 
 router.post('/', function(req, res) {
 
@@ -18,7 +20,8 @@ router.post('/', function(req, res) {
   }
 
   foursquare.venues.search(searchObj, function(error, resp) {
-    res.send(resp);
+    var normalizedData = normalize(resp.response.venues, 'foursquare')
+    res.send(normalizedData);
   })
 })
 

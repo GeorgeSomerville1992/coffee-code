@@ -14,6 +14,7 @@ var GooglePlaces = require('googleplaces')
 
 var googlePlaces = new GooglePlaces(config.apiKey, config.outputFormat);
 var parameters;
+var normalize = require('../utils/normalize-venue-data')
 
 router.post('/', function(req, res) {
   /**
@@ -29,8 +30,10 @@ router.post('/', function(req, res) {
 
   googlePlaces.placeSearch(parameters, function (error, resp) {
     if (error) throw error;
-    response = JSON.stringify(resp);
-    res.send(response);
+    // response = JSON.parse(resp);
+    console.log('reponseFROM GOOGLE PLACES', resp.results);
+    var normalizedData = normalize(resp.results, 'googlePlaces')
+    res.send(normalizedData);
   });
 })
 

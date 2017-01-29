@@ -3,7 +3,7 @@ var router = express.Router();
 var request = require('request');
 
 var yelp = require("node-yelp");
-
+var normalize = require('../utils/normalize-venue-data')
 
 var client = yelp.createClient({
   oauth: {
@@ -26,7 +26,8 @@ router.post('/', function(req, res, next) {
   }).then(function (data) {
     var businesses = data.businesses;
     var location = data.region;
-    res.send({businesses: businesses})
+    var normalizedData = normalize(businesses, 'yelp');
+    res.send(normalizedData)
   });
 });
 
