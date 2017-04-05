@@ -1,5 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   appRegistry,
   StyleSheet,
@@ -12,6 +13,7 @@ import {
 import Header from '../common/header';
 import styles from '../styles/common-styles.js';
 import PostCodeSearch from './search.js';
+import { getFoursquareVenues } from '../../actions'
 
 import YelpApi from '../../api/yelp.js'
 import FourSquareApi from '../../api/foursquare.js';
@@ -20,9 +22,7 @@ import Geocoder from 'react-native-geocoding';
 
 Geocoder.setApiKey('AIzaSyDAyIASv96bjGFza6BhlEhpXDzglJmBPHM'); // use a valid API key
 
-export default class Venues extends Component {
-  // make a search bar and import it in here
-  // for now just do request.
+export class Venues extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,31 +40,24 @@ export default class Venues extends Component {
 
   getVenues(location) {
     let locationString = location.lat + ", " + location.lng
-
-    // bind all of these to redux...
-    // have a promise dispatcher
     let venues = []
-    // push the data inside here...
 
-    // each one will be passed through to a util function
-    // then chucked back we simply ad this to our main hash
-
-    //
     YelpApi(locationString).then((data) => {
-      console.log('datta from yelp', data)
+      console.log('data from yelp', data)
       venues.push(data)
       this.setState({ loaded: true })
     }, (error) => {
       console.log('error', error)
     })
+    this.props.getFoursquareVenues(locationString)
 
-    FourSquareApi(locationString).then((data) => {
-      console.log('datat from fourswquare', data)
-      venues.push(data)
-      this.setState({ loaded: true })
-    }, (error) => {
-      console.log('error', error)
-    })
+    // FourSquareApi(locationString).then((data) => {
+    //   console.log('datat from fourswquare', data)
+    //   venues.push(data)
+    //   this.setState({ loaded: true })
+    // }, (error) => {
+    //   console.log('error', error)
+    // })
 
 
     GooglePlacesApi(locationString).then((data) => {
@@ -73,16 +66,12 @@ export default class Venues extends Component {
     }, (error) => {
       console.log('error', error)
     })
-    console.log('final data', venues)
     // blank becuase of raise condirion
     // needs to go into a promise????
-    //  construct some sort of promise ting
+    // construct some sort of promise ting
+    // or add redux into the mix? shall we straight go in to redux
   }
   // external helper libary
-  combineResults() {
-
-  }
-
 
   searchVenues(postcode) {
     let that = this
@@ -99,6 +88,8 @@ export default class Venues extends Component {
   }
 
   render() {
+    const { foursquareVenues } = this.props
+
     return (
       <View style={styles.container}>
         <Header text="Venues" loaded={this.state.loaded}  />
@@ -110,3 +101,17 @@ export default class Venues extends Component {
     )
   }
 }
+
+const mapStateToProps = (state, ownProps) => {
+  return { foursquareVenues: state.foursquareVenues }
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    getFoursquareVenues: (locationString) => {
+      dispatch(getFoursquareVenues(locationString))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Venues)

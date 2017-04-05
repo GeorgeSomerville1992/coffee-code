@@ -21,6 +21,6 @@ module.exports = (location) => {
   .then(response => response.json())
   .then(json => json)
   .catch(err => {
-    console.log('george fucked up', err)
+    console.log('api error', err)
   })
 }

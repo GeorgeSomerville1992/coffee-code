@@ -12,6 +12,7 @@ import Header from '../common/header';
 import styles from '../styles/common-styles';
 
 import Login from './signin';
+import LibaryList from '../LibaryList';
 
 import Firebase from 'firebase';
 
@@ -73,7 +74,14 @@ export default class signup extends Component {
     console.log('going to login');
     this.props.navigator.push({
       component: Login
-    });
+    })
+  }
+
+  goToList() {
+    console.log('going')
+    this.props.navigator.push({
+      component: LibaryList
+    })
   }
 
   render() {
@@ -108,6 +116,11 @@ export default class signup extends Component {
             onpress={this.goToLogin.bind(this)}
             button_styles={styles.transparent_button}
             button_text_styles={styles.transparent_button_text} />
+          <Button
+            text="Lists"
+            onpress={this.goToList.bind(this)}
+            button_styles={styles.primary_button}
+            button_text_styles={styles.primary_button_text} />
         </View>
       </View>
     );

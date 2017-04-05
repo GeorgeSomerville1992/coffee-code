@@ -14,13 +14,13 @@ normalizeVenueData = function(data, searchApi) {
     console.log('SEARCH API', searchApi)
     switch(searchApi) {
       case 'foursquare':
-        console.log('foursquare ======>')
         normalizeFoursquare(venue, venueHash);
         break;
       case 'yelp':
         normalizeYelp(venue, venueHash);
         break;
       case 'googlePlaces':
+        console.log('googleplaces =======>')
         normalizeGooglePlaces(venue, venueHash);
         break;
     }
@@ -55,6 +55,7 @@ normalizeVenueData = function(data, searchApi) {
  // to detect each property and do this like a promise
  // also a util function to remove duplicates... like filter orsomething
  // and finally put this all into a promise...
+ // see that recusive example for more info...
 }
 
 module.exports = normalizeVenueData
