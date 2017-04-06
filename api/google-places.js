@@ -9,18 +9,21 @@ module.exports = (location) => {
 
   // annoying thing with fetch...
   // call json then use response after that
+  const googlePlacesPromise = new Promise((resolve, reject) => {
+    return fetch(rootUrl, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: location
+    })
+    .then(response => response.json())
+    .then(json => resolve(json))
+    .catch(err => {
+      reject(() => console.log('api error', err))
+    })
+  })
 
-  return fetch(rootUrl, {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: location
-  })
-  .then(response => response.json())
-  .then(json => json)
-  .catch(err => {
-    console.log('api error', err)
-  })
+  return googlePlacesPromise
 }

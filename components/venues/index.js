@@ -13,7 +13,7 @@ import {
 import Header from '../common/header';
 import styles from '../styles/common-styles.js';
 import PostCodeSearch from './search.js';
-import { getFoursquareVenues } from '../../actions'
+import { getFoursquareVenues, getYelpVenues, getGooglePlacesVenues } from '../../actions'
 
 import YelpApi from '../../api/yelp.js'
 import FourSquareApi from '../../api/foursquare.js';
@@ -42,14 +42,18 @@ export class Venues extends Component {
     let locationString = location.lat + ", " + location.lng
     let venues = []
 
-    YelpApi(locationString).then((data) => {
-      console.log('data from yelp', data)
-      venues.push(data)
-      this.setState({ loaded: true })
-    }, (error) => {
-      console.log('error', error)
-    })
+    // YelpApi(locationString).then((data) => {
+    //   console.log('data from yelp', data)
+    //   venues.push(data)
+    //   this.setState({ loaded: true })
+    // }, (error) => {
+    //   console.log('error', error)
+    // })
+
+    this.props.getYelpVenues(locationString)
+
     this.props.getFoursquareVenues(locationString)
+    this.props.getGooglePlacesVenues(locationString)
 
     // FourSquareApi(locationString).then((data) => {
     //   console.log('datat from fourswquare', data)
@@ -88,7 +92,10 @@ export class Venues extends Component {
   }
 
   render() {
-    const { foursquareVenues } = this.props
+    const { foursquareVenues, yelpVenues, googlePlacesVenues } = this.props
+    console.log('foursqaure venues ===>', foursquareVenues)
+    console.log('yelp venues ===>', yelpVenues)
+    console.log('googleplacesVenues =====>', googlePlacesVenues)
 
     return (
       <View style={styles.container}>
@@ -103,13 +110,23 @@ export class Venues extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  return { foursquareVenues: state.foursquareVenues }
+  return {
+    foursquareVenues: state.foursquareVenues,
+    yelpVenues: state.yelpVenues,
+    googlePlacesVenues: state.googlePlacesVenues,
+  }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     getFoursquareVenues: (locationString) => {
       dispatch(getFoursquareVenues(locationString))
+    },
+    getYelpVenues: (locationString) => {
+      dispatch(getYelpVenues(locationString))
+    },
+    getGooglePlacesVenues: (locationString) => {
+      dispatch(getGooglePlacesVenues(locationString))
     }
   }
 }

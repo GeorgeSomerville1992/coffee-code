@@ -45,12 +45,20 @@ export const getFoursquareVenues = (payload) => {
   }
 }
 
-export const getGooglePlaces = () => {
-
+export const getGooglePlacesVenues = (payload) => {
+  return {
+    type: 'get_google_places',
+    promise: GooglePlacesApi.bind(null, payload),
+    payload,
+  }
 }
 
-export const getYelp = () => {
-
+export const getYelpVenues = (payload) => {
+  return {
+    type: 'get_yelp',
+    promise: YelpApi.bind(null, payload),
+    payload,
+  }
 }
 
 

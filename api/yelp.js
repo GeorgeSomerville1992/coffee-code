@@ -6,17 +6,20 @@ const kelvinToC = (kelvin) => {
 }
 
 module.exports = (location) => {
-  return fetch(rootUrl, {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: location
+  const yelpPromise = new Promise((resolve, reject) => {
+    return fetch(rootUrl, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: location
+    })
+    .then(response => response.json())
+    .then(json => resolve(json))
+    .catch(err => {
+      reject(() => console.log('api error', err))
+    })
   })
-  .then(response => response.json())
-  .then(json => json)
-  .catch(err => {
-    console.log('api error', err)
-  })
+  return yelpPromise
 }
