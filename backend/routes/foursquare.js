@@ -16,7 +16,9 @@ router.post('/', function(req, res) {
 
   var searchObj = {
     ll: Object.keys(req.body)[0],
-    query: 'coffee'
+    query: 'coffee',
+    intent: 'browse',
+    radius: 2000
   }
 
   foursquare.venues.search(searchObj, function(error, resp) {

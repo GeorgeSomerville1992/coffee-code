@@ -20,21 +20,6 @@ export const selectLibrary = (libraryId) => {
   }
 }
 
-// need to make the api part. where it will fetch the venus
-// these will then talk to the api bit
-// so perhaps use a dispatcher..
-// so how that works
-// so like below..
-// export function createItem(payload = {}) {
-//   return {
-//     type: actionTypes.SET_ITEM,
-//     promise: Customer.items.create.bind(null, payload),
-//     payload,
-//   }
-// }
-
-// and we need to firgure out how to put them together as well..
-
 // looks like I'm going to have to make my thunk here? because acitons must only be plan objects
 // http://stackoverflow.com/questions/35530547/async-actions-in-redux
 export const getFoursquareVenues = (payload) => {

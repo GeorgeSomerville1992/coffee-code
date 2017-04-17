@@ -14,6 +14,8 @@ import Header from '../common/header';
 import styles from '../styles/common-styles.js';
 import PostCodeSearch from './search.js';
 import { getFoursquareVenues, getYelpVenues, getGooglePlacesVenues } from '../../actions'
+import get from 'lodash/get'
+
 
 import YelpApi from '../../api/yelp.js'
 import FourSquareApi from '../../api/foursquare.js';
@@ -38,38 +40,29 @@ export class Venues extends Component {
     });
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    let shouldUpdate = false
+    if (get(nextProps, 'googlePlacesVenues') && get(nextProps, 'yelpVenues') && get(nextProps, 'foursquareVenues')) {
+      shouldUpdate = true
+    }
+    return shouldUpdate
+  }
+
   getVenues(location) {
     let locationString = location.lat + ", " + location.lng
     let venues = []
 
-    // YelpApi(locationString).then((data) => {
-    //   console.log('data from yelp', data)
-    //   venues.push(data)
-    //   this.setState({ loaded: true })
-    // }, (error) => {
-    //   console.log('error', error)
-    // })
 
     this.props.getYelpVenues(locationString)
-
     this.props.getFoursquareVenues(locationString)
     this.props.getGooglePlacesVenues(locationString)
 
-    // FourSquareApi(locationString).then((data) => {
-    //   console.log('datat from fourswquare', data)
+    // GooglePlacesApi(locationString).then((data) => {
+    //   console.log('data from google places', data)
     //   venues.push(data)
-    //   this.setState({ loaded: true })
     // }, (error) => {
     //   console.log('error', error)
     // })
-
-
-    GooglePlacesApi(locationString).then((data) => {
-      console.log('data from google places', data)
-      venues.push(data)
-    }, (error) => {
-      console.log('error', error)
-    })
     // blank becuase of raise condirion
     // needs to go into a promise????
     // construct some sort of promise ting
@@ -93,21 +86,36 @@ export class Venues extends Component {
 
   render() {
     const { foursquareVenues, yelpVenues, googlePlacesVenues } = this.props
-    console.log('foursqaure venues ===>', foursquareVenues)
-    console.log('yelp venues ===>', yelpVenues)
-    console.log('googleplacesVenues =====>', googlePlacesVenues)
+    console.log('data foursquare Venues ===>', foursquareVenues)
+    console.log('data yelp =====>', yelpVenues)
+    console.log('goooglePlacesVenues ======>', googlePlacesVenues)
+    // flesh out venue
 
     return (
       <View style={styles.container}>
         <Header text="Venues" loaded={this.state.loaded}  />
         <PostCodeSearch searchVenues={this.searchVenues} />
-        <View style={styles.body}>
+        <View style={venueStyles.body}>
+
           <Text> hello </Text>
         </View>
       </View>
     )
   }
 }
+
+const venueStyles = StyleSheet.create({
+  body: {
+    flex: 9,
+    marginLeft: 3,
+    marginRight: 3,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 5,
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+})
 
 const mapStateToProps = (state, ownProps) => {
   return {
